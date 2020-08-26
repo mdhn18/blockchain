@@ -29,12 +29,28 @@ class Blockchain:
         newBlock.prevhash=self.getLastBlock().hash
         newBlock.hash=newBlock.calcHash()
         self.chain.append(newBlock)
+#check the valid chain and valid block
+    def isChainValid(self):
+        for i in range(1,len(self.chain)):
+            prevb=self.chain[i-1]
+            currb=self.chain[i]
+            if(currb.hash != currb.calcHash()):
+                print("Invalid Block")
+                return False
+            if(currb.prevhash != prevb.hash):
+                print("Invalid Chain")
+                return False
+        return True
 
 
 
 osaCoin=Blockchain()
 osaCoin.addBlock(Block(1,'13/04/2020',100))
 osaCoin.addBlock(Block(2,'14/04/2020',20))
+#osaCoin.chain[1].transaction=333
+#osaCoin.chain[1].hash=osaCoin.chain[1].calcHash()
 
 for b in osaCoin.chain:
     print(b)
+print(osaCoin.isChainValid()) #text for valid or not
+
